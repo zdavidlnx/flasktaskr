@@ -10,15 +10,16 @@
             {% for message in get_flashed_messages() %}
                 <div class="flash">{{ message }}</div>
             {% endfor %}
-        </div>
 
-        {% if error %}
-            <div class="error"><strong>Error: </strong> {{ error }}</div>
-        {% endif %}
 
-        <br>
+            {% if error %}
+                <div class="error"><strong>Error: </strong> {{ error }}</div>
+            {% endif %}
 
-        {% block content %}
-        {% endblock %}
+            <br>
+
+            {% block content %}
+            {% endblock %}
+         </div>
     </body>
 </html>
