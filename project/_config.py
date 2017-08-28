@@ -1,3 +1,5 @@
+# project/_config.py
+
 import os
 
 # obtenemos la carpeta donde está este script

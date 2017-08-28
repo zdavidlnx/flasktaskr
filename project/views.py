@@ -31,9 +31,9 @@ def login_required(test):
 
 
 # Route handlers
-@app.config('/logout/')
+@app.route('/logout/')
 def logout():
-    session.pop('logged_in')
+    session.pop('logged_in', None)
     flash('Goodbye!!')
     redirect(url_for('login'))
 
@@ -48,7 +48,5 @@ def login():
             session['logged_in'] = True
             flash('Welcome!!')
             return redirect(url_for('tasks'))
-
     return render_template('login.html')
-
 
