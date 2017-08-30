@@ -3,7 +3,7 @@
 import sqlite3
 from functools import wraps
 
-from flask import Flask, flash, redirect, render_template, url_for, request, session
+from flask import Flask, flash, redirect, render_template, url_for, request, session, g
 
 
 # Configuración
@@ -49,4 +49,27 @@ def login():
             flash('Welcome!!')
             return redirect(url_for('tasks'))
     return render_template('login.html')
+
+
+@app.route('/tasks/')
+@login_required
+def tasks():
+    g.db = connect_db()
+    cursor = g.db.execute('SELECT name, due_time, priority, task_id FROM tasks WHERE status=1')
+
+    # genero un array de diccionarios, cada dicionario es una fila
+    open_tasks = [dict(name=row[0], due_time=row[1], priority=row[2], task_id=row[3]) for row in cursor.fetchall()]
+
+    cursor = g.db.execute('SELECT name, due_time, priority, task_id FROM tasks WHERE status=0')
+
+    # genero un array de diccionarios, cada dicionario es una fila
+    closed_tasks = [dict(name=row[0], due_time=row[1], priority=row[2], task_id=row[3]) for row in cursor.fetchall()]
+    g.db.close()
+
+    return render_template('tasks.html',
+                           form=AddTaskForm(request.form),
+                           open_tasks=open_tasks,
+                           closed_tasks=closed_tasks)
+
+
 
