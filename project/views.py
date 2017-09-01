@@ -4,6 +4,8 @@ import sqlite3
 from functools import wraps
 
 from flask import Flask, flash, redirect, render_template, url_for, request, session, g
+from forms import AddTaskForm
+
 
 
 # Configuración
@@ -35,7 +37,7 @@ def login_required(test):
 def logout():
     session.pop('logged_in', None)
     flash('Goodbye!!')
-    redirect(url_for('login'))
+    return redirect(url_for('login'))
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -55,15 +57,15 @@ def login():
 @login_required
 def tasks():
     g.db = connect_db()
-    cursor = g.db.execute('SELECT name, due_time, priority, task_id FROM tasks WHERE status=1')
+    cursor = g.db.execute('SELECT name, due_date, priority, task_id FROM tasks WHERE status=1')
 
     # genero un array de diccionarios, cada dicionario es una fila
-    open_tasks = [dict(name=row[0], due_time=row[1], priority=row[2], task_id=row[3]) for row in cursor.fetchall()]
+    open_tasks = [dict(name=row[0], due_date=row[1], priority=row[2], task_id=row[3]) for row in cursor.fetchall()]
 
-    cursor = g.db.execute('SELECT name, due_time, priority, task_id FROM tasks WHERE status=0')
+    cursor = g.db.execute('SELECT name, due_date, priority, task_id FROM tasks WHERE status=0')
 
     # genero un array de diccionarios, cada dicionario es una fila
-    closed_tasks = [dict(name=row[0], due_time=row[1], priority=row[2], task_id=row[3]) for row in cursor.fetchall()]
+    closed_tasks = [dict(name=row[0], due_date=row[1], priority=row[2], task_id=row[3]) for row in cursor.fetchall()]
     g.db.close()
 
     return render_template('tasks.html',
@@ -78,14 +80,14 @@ def tasks():
 def new_task():
     g.db = connect_db()
     name = request.form['name']
-    date = request.form['due_time']
+    date = request.form['due_date']
     priority = request.form['priority']
     if not name or not date or not priority:
         flash('All fields are required. Please try again.')
         return redirect(url_for('tasks'))
     else:
         g.db.execute('INSERT INTO tasks (name, due_date, priority, status) VALUES (?,?,?,1)',
-                     [request.form['name'], request.form['due_time'], request.form['priority']])
+                     [request.form['name'], request.form['due_date'], request.form['priority']])
         g.db.commit()
         g.db.close()
         flash('New entry was succesfully posted. Thanks')
