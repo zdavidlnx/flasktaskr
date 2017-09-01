@@ -7,7 +7,6 @@ from flask import Flask, flash, redirect, render_template, url_for, request, ses
 from forms import AddTaskForm
 
 
-
 # Configuración
 
 app = Flask(__name__)
