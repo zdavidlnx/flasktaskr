@@ -5,13 +5,15 @@ from functools import wraps
 from flask import Flask, flash, redirect, render_template, url_for, request, session, g
 from flask_sqlalchemy import SQLAlchemy
 from forms import AddTaskForm
-from models import Task
+
 
 # Configuración
 
 app = Flask(__name__)
 app.config.from_object('_config')
 db = SQLAlchemy(app)
+
+from models import Task
 
 
 def login_required(test):
@@ -22,7 +24,6 @@ def login_required(test):
         else:
             flash('You need to login first.')
             redirect(url_for('login'))
-
     return wrap
 
 
@@ -68,12 +69,13 @@ def new_task():
     form = AddTaskForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
-            the_new_task = Task(form.name.data,
-                                form.due_date.data,
-                                form.priority.data,
-                                '1'
-                                )
-            db.session.add(the_new_task)
+            new_task = Task(
+                form.name.data,
+                form.due_date.data,
+                form.priority.data,
+                '1'
+            )
+            db.session.add(new_task)
             db.session.commit()
             flash('New entry was succesfully posted. Thanks')
     return redirect(url_for('tasks'))
