@@ -1,24 +1,20 @@
 # project/db_create.py
 
+from views import db
+from models import Task
+from datetime import date
 
-import sqlite3
-from _config import DATABASE_PATH
 
-with sqlite3.connect(DATABASE_PATH) as connection:
+# Creamos la base de datos y la tabla
+db.create_all()
 
-    c = connection.cursor()
 
-    # creamos la tabla
-    c.execute("""CREATE TABLE tasks(task_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL, due_date TEXT NOT NULL, priority INTEGER NOT NULL,
-                status INTEGER NOT NULL)""")
+# Insertamos los datos de ejemplo
+db.session.add(Task("Finish this tutorial", date(2017, 8, 22), 10, 1))
+db.session.add(Task("Finish Real Python", date(2017, 11, 23), 10, 1))
+db.session.add(Task("Revisar SQLAlchemy", date(2017, 10, 12), 10, 0))
 
-    # insertamos dummy data
-    c.execute(
-        'INSERT INTO tasks (name, due_date, priority, status)'
-        'VALUES("Finish this tutorial", "03/25/2015", 10, 1)'
-    )
-    c.execute(
-        'INSERT INTO tasks (name, due_date, priority, status)'
-        'VALUES("Finish Real Python Course 2", "03/25/2015", 10, 1)'
-    )
+# Commit de los cambios
+db.session.commit()
+
+
