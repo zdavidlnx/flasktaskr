@@ -1,23 +1,18 @@
 # project/_config.py
 
+
 import os
 
-# obtenemos la carpeta donde está este script
+
+# grab the folder where this script lives
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 DATABASE = 'flasktaskr.db'
 CSRF_ENABLED = True
+SECRET_KEY = 'my_precious'
 
-"""
-    Se ha generado usando:
-    
-    import os
-    os.urandom(24)
-"""
-SECRET_KEY = b'\xb03V\xf7\x81\xeb\xfd\x1f\xda\x97m\x9faO~\xf7\x1a\x03UT\x82r\x0f\xae'
-
-# Definimos el path completo a la base de datos
+# define the full path for the database
 DATABASE_PATH = os.path.join(basedir, DATABASE)
 
-# Uri a la base de datos
+# the database uri
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + DATABASE_PATH
