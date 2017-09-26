@@ -53,7 +53,8 @@ def tasks():
         'tasks.html',
         form=AddTaskForm(request.form),
         open_tasks=open_tasks(),
-        closed_tasks=closed_tasks()
+        closed_tasks=closed_tasks(),
+        username=session['name']
     )
 
 
@@ -64,7 +65,7 @@ def new_task():
     form = AddTaskForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
-            new_task = Task(
+            new_task_o = Task(
                 form.name.data,
                 form.due_date.data,
                 form.priority.data,
@@ -72,7 +73,7 @@ def new_task():
                 '1',
                 session['user_id']
             )
-            db.session.add(new_task)
+            db.session.add(new_task_o)
             db.session.commit()
             flash('New entry was successfully posted. Thanks.')
             return redirect(url_for('tasks.tasks'))
