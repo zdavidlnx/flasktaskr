@@ -3,7 +3,13 @@
 import os
 from project import app
 
-# Heroku true -> ejecuta para Heroku, con False, para ejecutar en local
+# Heroku = True -> ejecuta para Heroku,
+# Heroku = False -> para ejecutar en local
+# heroku create -> SOLO primera vez para crear la app (depues de hacer el Procfile y logear con heroku login)
+# git push heroku master -> Para suburlo a Heroku
+# heroku ps -> vemos si esta correindo
+# heroku open -> abrimos la app
+# heroku logs  -> vemos los logs en heroku
 HEROKU = True
 
 if __name__ == '__main__':
