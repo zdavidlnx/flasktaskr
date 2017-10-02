@@ -23,7 +23,7 @@ app.register_blueprint(tasks_blueprint)
 @app.errorhandler(404)
 def not_found(error):
     if app.debug is not True:
-        now = datetime.datetime.now()
+        now = datetime.now()
         r = request.url
         with open('error.log', 'a') as f:
             current_timestamp = now.strftime("%d-%m-%Y %H:%M:%S")
@@ -35,7 +35,7 @@ def not_found(error):
 def internal_error(error):
     db.session.rollback()
     if app.debug is not True:
-        now = datetime.datetime.now()
+        now = datetime.now()
         r = request.url
         with open('error.log', 'a') as f:
             current_timestamp = now.strftime("%d-%m-%Y %H:%M:%S")
