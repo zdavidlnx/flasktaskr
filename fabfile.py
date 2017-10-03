@@ -13,7 +13,7 @@ def test():
 def commit():
     message = input("Enter a git commit message: ")
     local("git add .")
-    local("git commit -am '{}'".format(message))
+    local('git commit -am "{}"'.format(message))
 
 
 def push():
