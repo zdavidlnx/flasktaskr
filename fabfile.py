@@ -1,6 +1,9 @@
 from fabric.api import local, settings, abort
 from fabric.contrib.console import confirm
 
+# Debo de mirar más a fondo Fabric, para obtener errores que no son y demás
+# profundizar que parece muy interesante
+
 
 # prep
 
