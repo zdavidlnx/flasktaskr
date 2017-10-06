@@ -10,6 +10,8 @@ from project import app
 # heroku ps -> vemos si esta correindo
 # heroku open -> abrimos la app
 # heroku logs  -> vemos los logs en heroku
+#
+# Debería buscar un método para hacerlo de form automática
 HEROKU = False
 
 if __name__ == '__main__':
