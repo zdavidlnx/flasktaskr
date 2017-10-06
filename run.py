@@ -10,7 +10,7 @@ from project import app
 # heroku ps -> vemos si esta correindo
 # heroku open -> abrimos la app
 # heroku logs  -> vemos los logs en heroku
-HEROKU = True
+HEROKU = False
 
 if __name__ == '__main__':
     # El puerto lo da Heroku y es aleatorio, lo debo de coger en tiempo real del entorno.
